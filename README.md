@@ -55,9 +55,9 @@ These findings are based on the query results visible in MySQL Workbench screens
 - **Repeat purchasing:** 2,997 repeat customers out of 96,096 unique customers with orders, or 3.12%.
 - **Highest-revenue month in the ranking query:** November 2017, with product revenue of 987,765.37. August 2018 ranked second (977,544.69), and April 2018 third (973,534.09).
 - **Top category revenue:** The screenshot showed health_beauty (1,233,131.72), watches_gifts (1,166,176.98), and bed_bath_table (1,023,434.76) as the top three categories by delivered-order product revenue.
-- **Category ratings:** Among categories with at least 50 reviews, books_general_interest averaged 4.45 (508 reviews), construction_tools_tools 4.44 (94), and books_imported 4.40 (53).
+- **Category ratings:** In the latest Query 10 results, books_general_interest averaged 4.46 (508 reviews), construction_tools_tools averaged 4.43 (94 reviews), and books_technical averaged 4.41 (259 reviews). Categories are included only when they have at least 50 review-category records.
 
-**Metric definition:** Revenue queries sum `order_items.price` for delivered orders. Freight charges are excluded. Category rating averages are based on joined order-review/item records, with categories filtered to at least 50 distinct review IDs.
+**Metric definition:** Revenue queries sum `order_items.price` for delivered orders; freight charges are excluded. Category ratings are calculated by averaging distinct review-category records. A review may contribute to multiple categories if an order contains products from different categories. Categories are filtered to at least 50 review-category records.
 
 ## How to Run
 1. Download and extract the Olist dataset from Kaggle.
