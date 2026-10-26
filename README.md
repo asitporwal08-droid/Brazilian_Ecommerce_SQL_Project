@@ -87,4 +87,20 @@ The following table counts were verified in MySQL Workbench:
 6. Execute the queries individually or run the script.
 7. Review the result sets to explore the business insights.
 
-**Requirement:** MySQL 8.0 or
+**Requirement:** MySQL 8.0 or later is recommended because the queries use Common Table Expressions (CTEs) and window functions.
+
+## Skills Demonstrated
+
+- SQL querying and filtering
+- Aggregate functions and `GROUP BY`
+- Multi-table joins
+- Conditional logic using `CASE`
+- Date-based analysis
+- Common Table Expressions (CTEs)
+- Window functions
+- Data validation and business interpretation
+- Translating business questions into SQL queries
+
+## Conclusion
+
+This project demonstrates how SQL can be used to analyze e-commerce data, validate datasets, measure business performance, and generate insights to support data-driven decision-making.
