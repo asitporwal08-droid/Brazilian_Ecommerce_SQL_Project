@@ -148,26 +148,33 @@ SELECT
 FROM monthly_revenue
 ORDER BY revenue_rank, order_month;
 
+
 -- 10. How do customer ratings vary by product category?
-SELECT
-    COALESCE(
-        ct.product_category_name_english,
-        p.product_category_name,
-        'unknown'
-    ) AS product_category,
-    COUNT(DISTINCT r.review_id) AS total_reviews,
-    ROUND(AVG(r.review_score), 2) AS average_rating
-FROM order_reviews r
-JOIN order_items oi
-    ON r.order_id = oi.order_id
-JOIN products p
-    ON oi.product_id = p.product_id
-LEFT JOIN category_translation ct
-    ON p.product_category_name = ct.product_category_name
-GROUP BY COALESCE(
-    ct.product_category_name_english,
-    p.product_category_name,
-    'unknown'
+-- Each review is counted once per product category.
+
+WITH review_category AS (
+    SELECT DISTINCT
+        r.review_id,
+        r.review_score,
+        COALESCE(
+            ct.product_category_name_english,
+            p.product_category_name,
+            'unknown'
+        ) AS product_category
+    FROM order_reviews r
+    JOIN order_items oi
+        ON r.order_id = oi.order_id
+    JOIN products p
+        ON oi.product_id = p.product_id
+    LEFT JOIN category_translation ct
+        ON p.product_category_name = ct.product_category_name
 )
-HAVING COUNT(DISTINCT r.review_id) >= 50
+SELECT
+    product_category,
+    COUNT(*) AS total_reviews,
+    ROUND(AVG(review_score), 2) AS average_rating
+FROM review_category
+GROUP BY product_category
+HAVING COUNT(*) >= 50
 ORDER BY average_rating DESC, total_reviews DESC;
+
