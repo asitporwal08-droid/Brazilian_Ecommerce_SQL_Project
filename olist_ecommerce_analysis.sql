@@ -137,3 +137,24 @@ SELECT
     RANK() OVER (ORDER BY total_revenue DESC) AS revenue_rank
 FROM monthly_revenue
 ORDER BY revenue_rank;
+
+
+-- Q10. Product Category vs Customer Reviews
+SELECT
+    COALESCE(
+        ct.product_category_name_english,
+        p.product_category_name,
+        'Unknown'
+    ) AS product_category,
+    COUNT(DISTINCT r.review_id) AS total_reviews,
+    ROUND(AVG(r.review_score), 2) AS average_rating
+FROM order_reviews r
+JOIN order_items oi
+    ON r.order_id = oi.order_id
+JOIN products p
+    ON oi.product_id = p.product_id
+LEFT JOIN category_translation ct
+    ON p.product_category_name = ct.product_category_name
+GROUP BY product_category
+HAVING COUNT(DISTINCT r.review_id) >= 50
+ORDER BY average_rating DESC;
